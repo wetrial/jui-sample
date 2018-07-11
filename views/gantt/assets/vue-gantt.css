@@ -8,7 +8,7 @@
   overflow: hidden;
 }
 .gantt-container .gantt-left .gantt-body {
-  overflow: auto;
+  overflow-x: scroll;
   overflow-y: hidden;
 }
 .gantt-container .gantt-left .gantt-col:nth-child(1) {
