@@ -1,0 +1,27 @@
+{
+  "name": "jui-example",
+  "version": "1.0.0",
+  "description": "基于jui的sample项目\r ### jui地址：https://github.com/wetrial/jui",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xiexingen/jui-sample.git"
+  },
+  "keywords": [
+    "jui",
+    "sample",
+    "gantt",
+    "form-design",
+    "表单设计",
+    "甘特图"
+  ],
+  "author": "程序有Bug",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xiexingen/jui-sample/issues"
+  },
+  "homepage": "https://github.com/xiexingen/jui-sample#readme"
+}
