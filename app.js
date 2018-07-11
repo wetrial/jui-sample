@@ -33,7 +33,7 @@
             "jquerydatepicker": "i18n/datepicker-zh-CN",
             "slimscroll": "jquery.slimscroll.min",
             "mock": "mock",
-            "vue": 'lib/vue/vue2.min',
+            "vue": '/assets/lib/vue/vue2.min',
         },
         "shim": {
             "slimscroll": ["jquery"],

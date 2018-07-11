@@ -22,16 +22,8 @@ define([], {
 
     _beforeRender: function () {
         this.mainTopMenuData = [
-            { text: "开始使用", id: "getting-started", url: "#!getting-started" },
-            { text: "样式", id: "css", url: "#!css!" },
-            { text: "插件", id: "javascript", url: "#!javascript!" },
-            { text: "单页应用", id: "spa", url: "#!spa!" },
-            {
-                text: "实例", id: "examples", url: "",
-                children: [{ text: "插件", id: "javascript", url: "#!javascript!" },
-                { text: "单页应用", id: "spa", url: "#!spa!" },
-                { text: "实例", id: "examples", url: "#examples" }]
-            }
+            { text: "甘特图", id: "gantt", url: "#!gantt/index" },
+            { text: "表单设计", id: "formDesign", url: "#!formDesign/index" }
         ];
     },
 

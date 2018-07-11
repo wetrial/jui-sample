@@ -1,0 +1,333 @@
+﻿.gantt-container {
+    display: table;
+    table-layout: fixed;
+    /*左边块*/
+    .gantt-left {
+        .gantt-header {
+            overflow: hidden;
+        }
+
+        .gantt-body {
+            overflow: auto;
+            overflow-y: hidden;
+        }
+        //任务
+        .gantt-col:nth-child(1) {
+            width: 200px;
+        }
+        //责任人
+        .gantt-col:nth-child(2) {
+            width: 90px;
+        }
+        //计划开始
+        .gantt-col:nth-child(3) {
+            width: 70px;
+        }
+        //计划完成
+        .gantt-col:nth-child(4) {
+            width: 70px;
+        }
+        //计划工期(天)
+        .gantt-col:nth-child(5) {
+            width: 70px;
+        }
+        //实际开始
+        .gantt-col:nth-child(6) {
+            width: 70px;
+        }
+        //实际完成
+        .gantt-col:nth-child(7) {
+            width: 70px;
+        }
+        //完成率
+        .gantt-col:nth-child(8) {
+            width: 70px;
+        }
+    }
+    /*右边块*/
+    .gantt-right {
+        width: 9999px;
+
+        > .gantt-inner {
+            display: table;
+            table-layout: fixed;
+            width: 100%;
+        }
+
+        .gantt-header {
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        .gantt-body-outer-container {
+            position: relative;
+        }
+
+        .gantt-body-outer-container:after {
+            content: '';
+            display: block;
+            position: absolute;
+            top: 0px;
+            right: 0px;
+            bottom: 0;
+            width: 14px;
+            background-color: #fff;
+            border-left: 1px solid #ddd;
+        }
+
+        .gantt-body {
+            overflow-x: auto;
+            overflow-y: scroll;
+        }
+    }
+
+    .gantt-left, .gantt-right {
+        vertical-align: top;
+        display: table-cell;
+        white-space: nowrap;
+    }
+
+    .gantt-row-empty {
+        text-align: center;
+        border: 1px solid #e0e0e0;
+        line-height: 35px;
+        vertical-align: middle;
+    }
+
+    .gantt-row, .gantt-content-row {
+        white-space: nowrap;
+        height: 35px;
+        line-height: 35px;
+        border: 1px solid #e0e0e0;
+
+        .gantt-col, .current-day {
+            border-right: 1px solid #e0e0e0;
+            overflow: hidden;
+            display: inline-block;
+            *display: inline;
+            font-size: 12px;
+            height: 100%;
+        }
+
+        .gantt-col.border-right-none {
+            border-right: none;
+        }
+
+
+        .current-day {
+            background-color: #e8e8e8;
+        }
+    }
+
+    .gantt-body-container {
+        display: table
+    }
+
+    .parent:after {
+        clear: both;
+    }
+
+    .gantt-row {
+        position: relative;
+    }
+
+    .gantt-row.hover {
+        background-color: #ebeff0;
+    }
+
+    .gantt-content-row, .bar-container {
+        border: 0;
+        padding: 0;
+        margin: 0;
+    }
+
+    .bar-container {
+        position: absolute;
+        left: 0;
+        top: 0;
+
+        .bar-progress {
+            position: absolute;
+            text-align: center;
+            height: 25px;
+            top: 4px;
+        }
+
+        .plan {
+            z-index: 1;
+            background-color: #e4e4e4;
+        }
+
+        .actual-start, .actual-end {
+            z-index: 6;
+        }
+
+        .actual-normal {
+            z-index: 3;
+        }
+
+        .actual-warn {
+            z-index: 4;
+        }
+
+        .actual-delay {
+            z-index: 5;
+        }
+    }
+
+    .avatar {
+        position: relative;
+        display: block;
+        border-radius: 500px;
+        white-space: nowrap;
+        background: #70D5C3;
+        color: #fff;
+    }
+
+    .avatar img {
+        border-radius: 500px;
+        width: 100%;
+        height: 100%;
+    }
+
+    .avatar-text {
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        display: block;
+        font-size: 12px;
+    }
+
+    .avatar.thumb-xs > .avatar-text {
+        width: 30px;
+        height: 30px;
+        line-height: 30px;
+    }
+
+    .avatar.thumb-xxs > .avatar-text {
+        width: 24px;
+        height: 24px;
+        line-height: 24px;
+    }
+
+    .avatar.thumb-xxs > img {
+        width: 24px;
+        height: 24px;
+        position: relative;
+        top: -1px;
+    }
+
+    .thumb-xxs {
+        width: 24px;
+        line-height: 24px;
+        display: inline-block;
+        margin-right: 2px;
+    }
+
+    .thumb-wrapper {
+        padding: 2px;
+        border: 1px solid #dbe2e7;
+    }
+
+    .thumb img,
+    .thumb-xs img,
+    .thumb-sm img,
+    .thumb-md img,
+    .thumb-lg img,
+    .thumb-btn img {
+        height: auto;
+        max-width: 100%;
+        vertical-align: middle;
+    }
+
+    .i-checkbox {
+        width: 14px;
+        height: 14px;
+        line-height: 100%;
+        border: 1px solid #CBD5DD;
+        background-color: #FFF;
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 4px;
+        position: relative;
+        font-size: 12px;
+        font-family: "FontAwesome";
+        font-style: normal;
+        cursor: pointer;
+        text-align: center;
+        color: #fff;
+    }
+
+    .i-checkbox > i:before {
+        content: "\f00c";
+        font-style: normal;
+    }
+
+    .i-checkbox.on {
+        background: #5cb85c;
+        border-color: #5cb85c;
+    }
+
+    .actual-start, .actual-end {
+        background-color: #7c4b65;
+    }
+
+
+    .title {
+        text-align: center;
+    }
+
+    i.fa {
+        position: relative;
+        top: -5px;
+    }
+
+    .ui-resizable-e {
+        cursor: e-resize;
+        width: 20px;
+        right: -10px;
+        top: 0px;
+        background-color: #e4e4e4;
+        height: 100%;
+        opacity: 0.6;
+    }
+
+    .ui-resizable-e:hover {
+        opacity: 1;
+    }
+
+    .ui-resizable-e:after {
+        display: block;
+        position: absolute;
+        top: 50%;
+        left: 15%;
+        font: normal normal normal 14px/1 FontAwesome;
+        content: '\f07e';
+    }
+
+    .progress-bar-md {
+        display: inline-block;
+        position: relative;
+        top: 2px;
+        margin-right: 2px;
+        width: 50px;
+        height: 18px;
+        line-height: 18px;
+        border-radius: 4px;
+        background: #e0e0e0;
+        overflow: hidden;
+    }
+
+    .progress-bar-md div {
+        position: absolute;
+        height: 100%;
+    }
+
+    .progress-bar-md > span {
+        position: absolute;
+        right: 2px;
+        color: #000;
+        font-family: Geneva, Tahoma, sans-serif;
+    }
+}

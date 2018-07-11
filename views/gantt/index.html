@@ -1,0 +1,52 @@
+﻿<div id="viewPageContainer">
+    <link href="/views/gantt/assets/vue-gantt.css" rel="stylesheet" />
+    <div class="hbox h-sm bg-light b-2x v-m p-t-sm">
+        <div class="w-lg">甘特图demo</div>
+        <div>
+            <form class="form">
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">任务状态:</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" @change="handleChangeFilter" v-model="filter">
+                                <option :value="'all'">全部</option>
+                                <option :value="'unCompleted'" selected="selected">未完成</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="btn-group">
+                        <button type="button" @click="toggleType('day')" class="btn" :class="{'bg-primary': type==='day' }">日</button>
+                        <button type="button" @click="toggleType('week')" class="btn" :class="{'bg-primary': type==='week' }">周</button>
+                        <button type="button" @click="toggleType('month')" class="btn" :class="{'bg-primary': type==='month' }">月</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="vbox-bd-cell">
+        <div class="vbox-bd-content  p-a-md">
+            <gantt :type="type" @view-task="viewTask" :set-height="setHeight" :list="list" />
+
+            <div>
+                <span class="badge m-l-lg m-r-sm" style="border-radius:3px;background-color:#e4e4e4">
+                    <i aria-hidden="true" class="fa fa-angle-left"></i>
+                </span>计划开始
+                <span class="badge m-l-lg m-r-sm" style="border-radius:3px;background-color:#e4e4e4">
+                    <i aria-hidden="true" class="fa fa-angle-right"></i>
+                </span>计划截止,还没超时
+                <span class="badge m-l-lg m-r-sm" style="border-radius:3px;background-color:#e4e4e4">&nbsp</span>计划区间,还没超时
+                <span class="badge bg-success m-l-lg m-r-sm" style="border-radius:4px;">&nbsp</span>正常实际完成
+                <span class="badge m-l-lg m-r-sm" style="border-radius:3px;background-color:#7c4b65;">
+                    <i aria-hidden="true" class="fa fa-angle-left"></i>
+                </span>实际开始
+                <span class="badge m-l-lg m-r-sm" style="border-radius:3px;background-color:#7c4b65;">
+                    <i aria-hidden="true" class="fa fa-angle-right"></i>
+                </span>实际完成
+                <span class="badge bg-danger m-l-lg m-r-sm" style="border-radius:4px;">&nbsp</span>超时警告
+                <span class="badge bg-warning m-l-lg m-r-sm" style="border-radius:4px;">&nbsp</span>提醒预警
+            </div>
+        </div>
+    </div>
+</div>

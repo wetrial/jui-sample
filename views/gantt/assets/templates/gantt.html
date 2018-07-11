@@ -1,0 +1,138 @@
+<div class="gantt-container">
+    <div class="gantt-left">
+        <div class="gantt-inner" :style="{width:vLeftWidth+'px'}">
+            <div class="gantt-header">
+                <div class="gantt-body-container">
+                    <div class="gantt-row">
+                        <div class="gantt-col border-right-none"></div>
+                        <div class="gantt-col border-right-none"></div>
+                        <div class="gantt-col border-right-none"></div>
+                        <div class="gantt-col border-right-none"></div>
+                        <div class="gantt-col border-right-none"></div>
+                        <div class="gantt-col border-right-none"></div>
+                        <div class="gantt-col border-right-none"></div>
+                        <div class="gantt-col border-right-none"></div>
+                    </div>
+                    <div class="gantt-row">
+                        <div class="gantt-col title">事件/任务</div>
+                        <div class="gantt-col title">责任人</div>
+                        <div class="gantt-col title">计划开始</div>
+                        <div class="gantt-col title">计划完成</div>
+                        <div class="gantt-col title">计划工期(天)</div>
+                        <div class="gantt-col title">实际开始</div>
+                        <div class="gantt-col title">实际完成</div>
+                        <div class="gantt-col title">完成率</div>
+                    </div>
+                </div>
+            </div>
+            <div class="gantt-body" :style="{height:height+'px'}" @scroll.passive="onScroll('left')">
+                <div v-if="list.length==0" class="gantt-row-empty">
+                    暂无数据
+                </div>
+                <div class="gantt-body-container">
+                    <template v-for="task in list">
+                        <div class="gantt-row" :data-id="task.Id">
+                            <div class=" gantt-col p-l-xs cursor">
+                                <span @click="toggleCollapse(task)" v-if="task.HasSubItems!==false" class="fa" :class="{'fa-angle-down':task.Open,'fa-angle-up':!task.Open}"></span>
+                                <span v-if="task.HasSubItems===false" class="fa" style="width:7.73px;">&nbsp;</span>
+                                <span class="i-checkbox disabled" :class="{'on':task.EventStatus===1}">
+                                    <i>&nbsp;</i>
+                                </span>
+                                <span @click="handleEventNodeClick(task)">
+                                    {{task.EventNodeName}}
+                                </span>
+                            </div>
+                            <div class="gantt-col">
+                                <span class="thumb-xxs avatar" v-for="(user,uIndex) in limitUser(task.Users)">
+                                    <span class="avatar-text">{{user.FullName|lastStr}}</span>
+                                </span>
+                                <span v-if="task.Users&&task.Users.length>2">...</span>
+                            </div>
+                            <div class="gantt-col">{{task.PlanStartDate|formatDateTime}}</div>
+                            <div class="gantt-col">{{task.PlanEndDate|formatDateTime}}</div>
+                            <div class="gantt-col">{{getEllipsDays(task.PlanStartDate,task.PlanEndDate)}}</div>
+                            <div class="gantt-col">{{task.ActualStartDate|formatDateTime}}</div>
+                            <div class="gantt-col">{{task.ActualCompletedDate|formatDateTime}}</div>
+                            <div class="gantt-col">
+                                <div class="progress-bar-md" style="margin-right:6px;width:60px">
+                                    <template v-for="percent in getPercent(task)">
+                                        <div class="bg-success inner" :style="{width:percent+'%'}"></div>
+                                        <span>{{percent}}%</span>
+                                    </template>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="gantt-row" :data-id="subTask.Id" v-if="task.Open" v-for="subTask in task.Items">
+                            <div class="gantt-col p-l-lg cursor" @click="handleEventNodeClick(subTask)">
+                                <span class="i-checkbox disabled" :class="{'on':subTask.EventStatus===1}">
+                                    <i>&nbsp;</i>
+                                </span>
+                                <span @click="handleEventNodeClick(task)">
+                                    {{subTask.EventNodeName}}
+                                </span>
+                            </div>
+                            <div class="gantt-col">
+                                <span class="thumb-xxs avatar" v-for="(user,uIndex) in limitUser(subTask.Users)">
+                                    <span class="avatar-text">{{user.FullName|lastStr}}</span>
+                                </span>
+                                <span v-if="subTask.Users.length>2">...</span>
+                            </div>
+                            <div class="gantt-col">{{subTask.PlanStartDate|formatDateTime}}</div>
+                            <div class="gantt-col">{{subTask.PlanEndDate|formatDateTime}}</div>
+                            <div class="gantt-col">{{getEllipsDays(subTask.PlanStartDate,subTask.PlanEndDate)}}</div>
+                            <div class="gantt-col">{{subTask.ActualStartDate|formatDateTime}}</div>
+                            <div class="gantt-col">{{subTask.ActualCompletedDate|formatDateTime}}</div>
+                            <div class="gantt-col">
+                                <div class="progress-bar-md" style="margin-right:6px;width:60px">
+                                    <template v-for="percent in getPercent(subTask)">
+                                        <div class="bg-success inner" :style="{width:percent+'%'}"></div>
+                                        <span>{{percent}}%</span>
+                                    </template>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="gantt-right">
+        <div class="gantt-inner">
+            <div class="gantt-body-outer-container">
+                <div class="gantt-header">
+                    <div class="gantt-body-container">
+                        <div class="gantt-row">
+                            <div class="gantt-col title" v-for="level1 in dateTables" :style="{width: (level1.days*dayWidth+'px')}">
+                                {{level1.text}}
+                            </div>
+                        </div>
+                        <div class="gantt-row">
+                            <template v-for="level1 in dateTables"><div v-for="date in level1.childrens" class="gantt-col title" :class="{'current-day':date.isCurrent}" :style="{width:date.days*dayWidth+'px'}">{{date.text}}</div></template>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="gantt-body" :style="{height:height+'px'}" @scroll.passive="onScroll('right')">
+                <div class="gantt-body-container">
+                    <template v-for="task in list">
+                        <div class="gantt-row" :data-id="task.Id">
+                            <div class="gantt-content-row">
+                                <div class="gantt-col" v-for="line in unitDatas" :class="{'current-day':line.isCurrent}" :style="{width:line.days*dayWidth+'px'}"></div>
+                            </div>
+                            <gantt-bar :task="task" :rangeDate="rangeDate" :dayWidth="dayWidth"></gantt-bar>
+                        </div>
+                        <div class="gantt-row" :data-id="subTask.Id" v-if="task.Open" v-for="subTask in task.Items">
+                            <div class="gantt-content-row">
+                                <div class="gantt-col" v-for="line in unitDatas" :class="{'current-day':line.isCurrent}" :style="{width:line.days*dayWidth+'px'}"></div>
+                            </div>
+                            <gantt-bar :task="subTask" :rangeDate="rangeDate" :dayWidth="dayWidth"></gantt-bar>
+                        </div>
+                    </template>
+                </div>
+                <div v-if="list.length==0" class="gantt-row-empty">
+                    暂无数据
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

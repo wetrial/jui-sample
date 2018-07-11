@@ -1,0 +1,14 @@
+<div class="bar-container">
+    <template v-for="(t,key) in getPlanBarProgress(task)">
+        <div v-if="key==='normal'" class="bar-progress plan" :style="{width:t.days*dayWidth+'px',left:t.distance*dayWidth+'px'}"></div>
+        <div v-else-if="key==='start'" class="bar-progress plan" :style="{width:dayWidth+'px',left:t.distance*dayWidth+'px'}"><i aria-hidden="true" class="fa fa-angle-left"></i></div>
+        <div v-else-if="key==='end'" class="bar-progress plan" :style="{width:dayWidth+'px',left:t.distance*dayWidth+'px'}"><i aria-hidden="true" class="fa fa-angle-right"></i></div>
+    </template>
+    <template v-for="(t,key) in getActualBarProgress(task)">
+        <div v-if="key==='start'" class="bar-progress actual actual-start" :style="{width:t.days*dayWidth+'px',left:t.distance*dayWidth+'px'}"><i aria-hidden="true" class="fa fa-angle-left"></i></div>
+        <div v-else-if="key==='normal'" class="bar-progress actual actual-normal bg-success" :style="{width:t.days*dayWidth+'px',left:t.distance*dayWidth+'px'}"></div>
+        <div v-else-if="key==='warn'" class="bar-progress actual actual-warn bg-warning" :style="{width:t.days*dayWidth+'px',left:t.distance*dayWidth+'px'}"></div>
+        <div v-else-if="key==='delay'" class="bar-progress actual actual-delay bg-danger" :style="{width:t.days*dayWidth+'px',left:t.distance*dayWidth+'px'}"></div>
+        <div v-else-if="key==='end'" class="bar-progress actual actual-end" :style="{width:t.days*dayWidth+'px',left:t.distance*dayWidth+'px'}"><i aria-hidden="true" class="fa fa-angle-right"></i></div>
+    </template>
+</div>
