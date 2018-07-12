@@ -63,11 +63,10 @@
                             });
                         },
                         handleChangeFilter:function(e){
-                            that.getGanttData(that.vuePage.filter,function(gd){
+                            that.getGanttData(this.filter,function(gd){
                                 assetsDateRange = ganttCore.getTaskMinAndMaxDate(gd);
-
-                                Vue.set(this.vuePage, "datePickerRange", [assetsDateRange.min,assetsDateRange.max]);
-                                Vue.set(this.vuePage, "assetsDateRange", assetsDateRange);
+                                Vue.set(that.vuePage, "datePickerRange", [assetsDateRange.min,assetsDateRange.max]);
+                                Vue.set(that.vuePage, "assetsDateRange", assetsDateRange);
                                 Vue.set(that.vuePage, "list", gd);
                             })                            
                         },
