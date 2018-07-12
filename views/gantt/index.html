@@ -6,12 +6,20 @@
             <form class="form">
                 <div class="col-sm-2">
                     <div class="form-group">
-                        <label class="col-sm-4 control-label">任务状态:</label>
-                        <div class="col-sm-8">
+                        <label class="col-sm-5 control-label">任务状态:</label>
+                        <div class="col-sm-7">
                             <select class="form-control" @change="handleChangeFilter" v-model="filter">
                                 <option :value="'all'">全部</option>
                                 <option :value="'unCompleted'" selected="selected">未完成</option>
                             </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">日期范围:</label>
+                        <div class="col-sm-9">
+                            <el-date-picker :editable="false" :clearable="false" size="small" :picker-options="pickerOptions" @change="changeDatePickerRange" v-model="datePickerRange" style="width:280px" type="daterange" range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期"></el-date-picker>
                         </div>
                     </div>
                 </div>
@@ -27,7 +35,7 @@
     </div>
     <div class="vbox-bd-cell">
         <div class="vbox-bd-content  p-a-md">
-            <gantt :type="type" @view-task="viewTask" :set-height="setHeight" :list="list" />
+            <gantt :type="type" @view-task="viewTask" :assets-date-range="assetsDateRange" :set-height="setHeight" :list="list" />
 
             <div>
                 <span class="badge m-l-lg m-r-sm" style="border-radius:3px;background-color:#e4e4e4">

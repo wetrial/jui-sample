@@ -11,7 +11,7 @@
     };
     requirejs.config({
         baseUrl: "/assets/js",
-        waitSeconds: 6,//超时时间设为6秒
+        waitSeconds: 8,//超时时间设为6秒
         onNodeCreated: function (node, config, moduleName, url) {
             //console.log('module ' + moduleName + ' is about to be loaded');
             NProgress.start();
@@ -33,13 +33,15 @@
             "jquerydatepicker": "i18n/datepicker-zh-CN",
             "slimscroll": "jquery.slimscroll.min",
             "mock": "mock",
-            "vue": '/assets/lib/vue/vue2.min',
+            //"vue": '/assets/lib/vue/vue2.min',
+            //"element":'/assets/lib/element-ui-2.4.1/index'
         },
         "shim": {
             "slimscroll": ["jquery"],
-            'vue': {
-                exports: 'vue'
-            }
+            //"element":['vue'],
+            // 'vue': {
+            //     exports: 'vue'
+            // }
         },
         urlArgs: "v=2.1.2"// + (new Date()).getTime()
     });

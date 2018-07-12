@@ -225,11 +225,15 @@
 
     //获取实际显示的日期区间块
     //{start:'Date',end:'Date'}
-    exports.getDateRange = function (tasks, formatType) {
-        var ranges = getAssetsData(tasks);
-        ranges.sort();
-        var minDate = ranges[0];
-        var maxDate = ranges[ranges.length - 1];
+    /**
+     * 根据最大日期和最小日期以及类型获取日期区间
+     * @param {ranges} [object] {min:'',max:''}
+     * @param {formatType} [string] day|week|month
+     * @return {object} {start:'',end:''}
+     */
+    exports.getDateRange = function (minAndMaxDate, formatType) {
+        var minDate = minAndMaxDate.min;
+        var maxDate = minAndMaxDate.max;
         //如果周视图 需要最低夸84天
         //如果月视图 最低需要夸180天
         var ellipDays = exports.dateHelper.getDayCount(minDate, maxDate);
@@ -364,7 +368,25 @@
         return result;
     }
 
-
+    /**
+     * 获取任务的最大日期和最小日期
+     * @param {array[object]} 任务列表
+     * @return {object} {min:'日期',max:'日期'}
+     */
+    exports.getTaskMinAndMaxDate=function(tasks) {
+        var dates = [];
+        tasks.forEach(function (task) {
+            AppendTaskDates(dates, task);
+            task.Items && task.Items.forEach(function (sTask) {
+                AppendTaskDates(dates, sTask);
+            })
+        })
+        dates.sort();
+        return {
+            min: dates[0] || new Date(),
+            max: dates[dates.length-1]||new Date()
+        }
+    }
 
     return exports;
 
@@ -698,19 +720,7 @@
 
         return vDate;
     }
-
-
-    //获取所有日期、是否含有未完成任务
-    function getAssetsData(tasks) {
-        var dates = [];
-        tasks.forEach(function (task) {
-            AppendTaskDates(dates, task);
-            task.Items && task.Items.forEach(function (sTask) {
-                AppendTaskDates(dates, sTask);
-            })
-        })
-        return dates;
-    }
+       
 
     //添加任务中的日期(计划开始、计划结束、实际开始、实际结束)
     function AppendTaskDates(result, task) {
